@@ -1,0 +1,27 @@
+{
+  "name": "api2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "development": "sudo nodemon index.js --exec 'sudo kill -9 $(sudo lsof -t -i:112) ; clear ; sudo node index.js'"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "all-the-cities": "^3.1.0",
+    "bcrypt": "^5.0.1",
+    "connect-mysql": "^4.0.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "express-mysql-session": "^2.1.7",
+    "express-session": "^1.17.2",
+    "express-useragent": "^1.0.15",
+    "geoip-lite": "^1.4.3",
+    "mysql": "^2.18.1",
+    "nodemailer": "^6.7.2",
+    "socket.io": "^4.4.1",
+    "useragent": "^2.3.0"
+  }
+}

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Api DirectAuth</title>
+</head>
+<body>
+
+    <input id="formemail" required name="email" type="email" placeholder="Email">
+    <input id="formpassword" minlength="6" required name="password" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+  <button onclick="logOut()">Logout</button>
+  <div style="margin: 20px 20px; border: 2px solid;" id="response"></div>
+  <div style="margin: 20px 20px; border: 2px solid;" id="info"></div>
+
+
+  <script>
+
+    getSessionInfo()
+
+    function login(){
+      var email = document.getElementById("formemail").value
+      var password = document.getElementById("formpassword").value
+      fetch("/api/user/auth", {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+        'Content-Type': 'application/json'
+        },
+      body: JSON.stringify({email, password})
+    }).then(data => data.text()).then(data => {
+      getSessionInfo()
+      var base = document.getElementById("response")
+        data = JSON.parse(data)
+        base.innerHTML = ""
+        for(var shard in data){
+          base.innerHTML += `<span style="color:#0000af">${shard}</span> : <span style="color:#009900">${data[shard]}</span> <br>`
+        }
+    })
+  }
+
+
+    function getSessionInfo(){
+      fetch("/api/user/session").then(data => data.text()).then(data => {
+        var base = document.getElementById("info")
+        data = JSON.parse(data)
+        base.innerHTML = ""
+        for(var shard in data){
+          base.innerHTML += `<span style="color:#0000af">${shard}</span> : <span style="color:#009900">${data[shard]}</span> <br>`
+        }
+      })
+    }
+
+    function logOut(){
+      fetch("/api/user/logout").then(data => data.text()).then(data => {
+        getSessionInfo()
+        var base = document.getElementById("response")
+        data = JSON.parse(data)
+        base.innerHTML = ""
+        for(var shard in data){
+          base.innerHTML += `<span style="color:#0000af">${shard}</span> : <span style="color:#009900">${data[shard]}</span> <br>`
+        }
+      })
+    }
+
+
+
+  </script>
+</body>
+</html>

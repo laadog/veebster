@@ -1,0 +1,26 @@
+Documentation for Veebster analyzer
+
+5 Main routes, root is //api/
+    /     -- browser login, etc
+    /user -- authentication, password changes, recovery, logging out
+    /page -- creating, removing, getting list of user pages
+    /stat -- Getting statistics of specific page
+    /hit  -- detecting website hits for remote clients
+
+Route /
+    get  / -- Login page
+Route /user -- Has 1 second of cooldown per session
+    post /auth -- Authenticating, Required: email, password : + sends {ok:true, credits, email} - sends {ok:false, err}
+    post /new  -- Registering new user, required: email, password + sends {ok:true} - sends {ok:false}
+    post /changepass -- Change password, when logged in and know old pass required password, newpass, authenticated : + sends {ok:true} - {ok:false, err}
+    post /getrecovery -- Getting recovery code sent to email: required email + sends {ok:true} - {ok:false, err}
+    post /newpass -- Update password, if provided recovey code : required code, password + sends {ok:true} - {ok:false, err}
+    post /vertify -- Vertifyes account : required code + sends {ok:true} - {ok:false, err}
+    get /logout --  Destroys session: required authenticated + sends {ok:true} - {ok:false, err}
+    get /session -- You'r session details
+Route /page -- Only authenticated
+    post /new -- Creates new page: required domain, plan[free, premium, standard] + sends {ok:true} - {ok:false, err}
+    post /delete -- Creates new page: required domain + sends {ok:true} - {ok:false, err}
+    get  /list -- + sends {ok:true, pages} 
+        
+
